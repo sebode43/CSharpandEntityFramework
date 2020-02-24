@@ -23,6 +23,7 @@ namespace CSharpandEntityFrameworkLibrary {
 							
 		public virtual DbSet<Customer> Customers { get; set; } //list of classes that map the tables that your application can access
 		public virtual DbSet<Order> Orders { get; set; }
+		public virtual DbSet<Product> Products { get; set; }
 
     }
 }

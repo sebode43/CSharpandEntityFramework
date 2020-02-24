@@ -12,10 +12,12 @@ namespace CSharpandEntityFramework {
             //GetCustomersByPK(context);
             //DeleteCustomer(context);
             //UpdateCustomer(context);
-            UpdateCustomerSales(context);
+            //UpdateCustomerSales(context);
             GetAllCustomers(context);
-           //AddOrders(context);
+            //AddOrders(context);
             //GetAllOrders(context);
+            //AddProducts(context);
+            GetAllProducts(context);
         }
 
         static void UpdateCustomer(AppDbContext context) {
@@ -88,6 +90,24 @@ namespace CSharpandEntityFramework {
             var cust = context.Customers.Find(3);
             cust.Sales = OrderTotal;
             context.SaveChanges();
+        }
+        
+        static void AddProducts(AppDbContext context) {
+            var product = new Product { ID = 0, Code = "SFP", Name = "Silver Frying Pan", Price = 27.50 };
+            var product2 = new Product { ID = 0, Code = "GSA", Name = "Granny Smith Apple", Price = 1.00 };
+            var product3 = new Product { ID = 0, Code = "BRVC", Name = "Box of Red Velvet Cupcakes", Price = 5.00 };
+            var product4 = new Product { ID = 0, Code = "GBR", Name = "Gray Bathroom Rug", Price = 17.50 };
+            var product5 = new Product { ID = 0, Code = "CCM", Name = "Cincinnati Coffee Mug", Price = 9.00 };
+            context.AddRange(product, product2, product3, product4, product5);
+            var rowsAffected = context.SaveChanges();
+            if (rowsAffected != 5) throw new Exception("Add Products failed");
+            Console.WriteLine("All products added");
+        }
+        static void GetAllProducts(AppDbContext context) {
+            var products = context.Products.ToList();
+            foreach(var p in products) {
+                Console.WriteLine(p);
+            }
         }
     }
 }

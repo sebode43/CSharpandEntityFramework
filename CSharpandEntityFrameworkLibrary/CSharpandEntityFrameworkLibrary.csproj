@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200224170259_added Order Class.cs" />
     <Compile Remove="Migrations\20200224170259_added Order Class.Designer.cs" />
+    <Compile Remove="Migrations\20200224203327_added class Product.cs" />
+    <Compile Remove="Migrations\20200224203327_added class Product.Designer.cs" />
+    <Compile Remove="Migrations\20200224203518_added class Product.cs" />
+    <Compile Remove="Migrations\20200224203518_added class Product.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
