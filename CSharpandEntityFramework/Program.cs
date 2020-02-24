@@ -20,6 +20,9 @@ namespace CSharpandEntityFramework {
             //GetAllOrders(context);
             //AddProducts(context);
             GetAllProducts(context);
+
+            var top2 = context.Products.Where(x => x.ID > 3).ToList();
+            var active = context.Customers.Where(x => x.Active).ToList(); //if booloean you do not need to say == true; false = !x.Active
         }
 
         static void UpdateCustomer(AppDbContext context) {
@@ -111,6 +114,5 @@ namespace CSharpandEntityFramework {
                 Console.WriteLine(p);
             }
         }
-
     }
 }
