@@ -8,6 +8,8 @@ namespace CSharpandEntityFramework {
         static void Main(string[] args) {
 
             var context = new AppDbContext();
+
+            Console.WriteLine($"Avg price is {context.Products.Average(x => x.Price)}");
             //AddCustomer(context);
             //GetCustomersByPK(context);
             //DeleteCustomer(context);
@@ -109,5 +111,6 @@ namespace CSharpandEntityFramework {
                 Console.WriteLine(p);
             }
         }
+
     }
 }
