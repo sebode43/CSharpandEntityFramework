@@ -14,6 +14,8 @@ namespace CSharpandEntityFrameworkLibrary.Models {
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; } //virtual = don't make this part of the table; only retrieve data
 
+        public override string ToString() => $"{ID}. {Description} | {Amount} | {CustomerId}";
+
         public Order() {
 
         }

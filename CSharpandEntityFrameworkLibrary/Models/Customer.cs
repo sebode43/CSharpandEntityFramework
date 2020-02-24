@@ -14,6 +14,7 @@ namespace CSharpandEntityFrameworkLibrary.Models {
         public double Sales { get; set; }
         public bool Active { get; set; } //if there is data you cannot make it not null immediately
 
+        public override string ToString() => $"{ID}. {Name} | {Sales} | {Active}";
 
         public Customer() {
 
