@@ -10,16 +10,21 @@ namespace CSharpandEntityFramework {
             var context = new AppDbContext();
 
             Console.WriteLine($"Avg price is {context.Products.Average(x => x.Price)}");
+            UpdateOrderAmounts(context);
             //AddCustomer(context);
             //GetCustomersByPK(context);
             //DeleteCustomer(context);
             //UpdateCustomer(context);
             //UpdateCustomerSales(context);
-            GetAllCustomers(context);
+            //GetAllCustomers(context);
             //AddOrders(context);
-            //GetAllOrders(context);
+            //UpdateOrders(context);
+            GetAllOrders(context);
             //AddProducts(context);
             GetAllProducts(context);
+            //AddOrderline(context);
+            GetOrderlines(context);
+
 
             var top2 = context.Products.Where(x => x.ID > 3).ToList();
             var active = context.Customers.Where(x => x.Active).ToList(); //if booloean you do not need to say == true; false = !x.Active
@@ -84,6 +89,14 @@ namespace CSharpandEntityFramework {
                 Console.WriteLine(o);
             }
         }
+        static void UpdateOrders(AppDbContext context) {
+            var orderpk = 5;
+            var ord = context.Orders.Find(orderpk);
+            if (ord == null) throw new Exception("Order cannot be found to update");
+            ord.Description = "Kitchen Upgrade Order";
+            var rowsAffected = context.SaveChanges();
+            if (rowsAffected != 1) throw new Exception("Failed to update orders");
+        }
 
        static void UpdateCustomerSales(AppDbContext context) {
             var CustOrderJoin = from c in context.Customers
@@ -114,5 +127,33 @@ namespace CSharpandEntityFramework {
                 Console.WriteLine(p);
             }
         }
+
+        static void AddOrderline(AppDbContext context) {
+            var order = context.Orders.SingleOrDefault(o => o.Description == "Frying Pan");
+            var product = context.Products.SingleOrDefault(p => p.Code == "BRVC");
+            var orderline = new Orderline {ID = 0, ProductID = product.ID, OrderID = order.ID, Quantity = 5 };
+            context.Orderlines.Add(orderline);
+            var rowsAffected = context.SaveChanges();
+            if (rowsAffected != 1) throw new Exception("Ordeline Insert Failed");
+        }
+        static void GetOrderlines(AppDbContext context) {
+            var orderlines = context.Orderlines.ToList();
+            orderlines.ForEach(line => Console.WriteLine(line));
+        }
+        static void UpdateOrderAmount(int orderID, AppDbContext context) {
+            var order = context.Orders.Find(orderID);
+            var Total = order.Orderlines.Sum(ol => ol.Quantity * ol.Product.Price);
+            order.Amount = Total;
+            var oa = context.SaveChanges();
+            if (oa != 1 && order.Amount != Total) throw new Exception("Order update of amount failed");
+        }
+
+        static void UpdateOrderAmounts(AppDbContext context) {
+            var orderIds = context.Orders.Select(x => x.ID).ToArray();
+            foreach(var orderID in orderIds) {
+                UpdateOrderAmount(orderID, context);
+            }
+        }
+
     }
 }

@@ -9,6 +9,7 @@ namespace CSharpandEntityFrameworkLibrary.Models {
         public string Code { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public virtual List<Orderline> Orderlines { get; set; }
 
         public Product() { }
         public override string ToString() => $"{ID}. {Code} | {Name} | {Price}";
